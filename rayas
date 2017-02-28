@@ -1,0 +1,199 @@
+import java.util.Scanner;
+public class Rayas
+{
+    private static  String matriz [][] = new String [3] [3];
+    private static int contador = 0;
+    private static int full=0;
+    public static void main (String [] args){
+        mostrar();
+        jugadorX();
+    }
+
+    private static void jugadorX(){
+        Scanner n1 = new Scanner (System.in);
+        System.out.println("¿Donde desea colocar la X ?");
+        String posicion = n1.nextLine();
+        rangoX(posicion);
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz[i].length;j++){
+                String aux =Integer.toString(i)+Integer.toString(j);
+                //System.out.println(aux);
+                if ( posicion.equals(aux) && matriz[i][j] == null){
+                    matriz[i][j] = "X|";
+                    contador=contador+1;
+                }
+            }
+        }
+        mostrar();
+        comprobar();
+
+    } 
+
+    private static void jugadorO(){
+        Scanner n1 = new Scanner (System.in);
+        System.out.println("¿Donde desea colocar la O ?");
+        String posicion = n1.nextLine();
+        rangoO(posicion);
+
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz[i].length;j++){
+                String aux =Integer.toString(i)+Integer.toString(j);
+                //System.out.println(aux);
+                if ( posicion.equals(aux) && matriz[i][j] == null){
+                    matriz[i][j] = "O|";
+                    contador=contador+1;
+                }
+            }
+        }
+        mostrar();
+        comprobar();
+
+    } 
+
+    private static void mostrar(){
+        System.out.print('\u000C');
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz[i].length;j++){
+                if(matriz[i][j] == null){
+                    System.out.print(" |");
+                }
+                else {
+                    System.out.print(matriz[i][j]);
+                }
+            }
+            System.out.println();
+
+        }
+
+    } 
+
+    private static void rangoO(String posicion){
+        int rango=0;
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz[i].length;j++){
+                String aux = Integer.toString(i)+Integer.toString(j);
+                if(posicion.equals(aux) && matriz[i][j] == null){
+                    rango=0;
+                    i=matriz.length-1;
+                    break;
+                }
+                else{
+                    rango=1;
+                }
+            }
+        }
+
+        if(rango ==1){
+            System.out.println("Fuera de rango o lugar ocupado");
+            jugadorO();
+        }
+    }
+
+    private static void rangoX(String posicion){
+        int rango=0;
+        for(int i=0;i<matriz.length;i++){
+            for(int j=0;j<matriz[i].length;j++){
+                String aux = Integer.toString(i)+Integer.toString(j);
+                if(posicion.equals(aux) && matriz[i][j] == null){
+                    rango=0;
+                    i=matriz.length-1;
+                    break;
+                }
+                else{
+                    rango=1;
+                }
+            }
+        }
+
+        if(rango ==1){
+            System.out.println("Fuera de rango o lugar ocupado");
+            jugadorX();
+        }
+    }
+
+    //Comprobar si hay tres en raya y salir del bucle
+
+    private static void comprobar(){
+        //filas
+        int j=0;
+        int fin=0;
+        for(int i=0;i<matriz.length;i++){
+            if(matriz[i][j] != null && matriz[i][j+1] != null && matriz[i][j+2] != null){    
+                if(matriz[i][j].equals(matriz[i][j+1]) && matriz[i][j].equals(matriz[i][j+2])){
+                    fin=1;
+                }
+            }
+        }
+        //Columnas
+        if(matriz[0][0] != null && matriz[1][0] != null && matriz[2][0] !=null){
+            if(matriz[0][0].equals(matriz[1][0]) && matriz[0][0].equals(matriz[2][0])){
+                fin=1;
+            }
+        }
+
+        if(matriz[0][1] != null && matriz[1][1] != null && matriz[2][1] !=null){
+            if(matriz[0][1].equals(matriz[1][1]) && matriz[0][1].equals(matriz[2][1])){
+                fin=1;
+            }
+        }
+
+        if(matriz[0][2] != null && matriz[1][2] != null && matriz[2][2] !=null){
+            if(matriz[0][2].equals(matriz[1][2]) && matriz[0][2].equals(matriz[2][2])){
+                fin=1;
+            }
+        }
+
+        //Diagonal
+        if(matriz[0][0] !=null && matriz[1][1] !=null && matriz[2][2] !=null){
+            if (matriz[0][0].equals(matriz[1][1]) && matriz[0][0].equals(matriz[2][2])){
+                fin=1;
+            }
+        }
+
+        if(matriz[2][0] !=null && matriz[1][1] !=null && matriz[0][2] !=null){
+            if (matriz[2][0].equals(matriz[1][1]) && matriz[2][0].equals(matriz[0][2])){
+                fin=1;
+            }
+        }
+
+        //full
+       
+        
+        
+        String temp="";
+        if(contador %2==0){
+            temp = "O";
+        }
+        else{temp="X";}
+
+        
+        int p=1;
+        for( int i=0;i<matriz.length;i++){
+            for( j=0;j<matriz[i].length;j++){
+                if(matriz[i][j] == null){
+                    p=0;
+                }
+                else {
+                    
+                }
+            }
+        }
+        if(p==1){
+            System.out.println("Empate");
+            fin=2;
+        }
+        
+        
+        if(fin ==1){
+            System.out.println("El ganador es "+temp);
+        }
+        else if(fin==2){}
+        else  if(contador %2==0){
+            jugadorX();
+        }
+        else if(contador %2 !=0){
+            jugadorO();
+        }
+        
+    }
+}
